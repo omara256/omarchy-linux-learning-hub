@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "learn.linux",
+  "name": "Linux Learning Hub",
+  "version": "1.0.0",
+  "author": "omara",
+  "license": "MIT",
+  "description": "Interactive daily task checklist and curriculum for Linux, System Administration, and Cyber Security.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Linux Learning",
+    "description": "Track daily Linux, System Administration, and Cyber Security learning progress.",
+    "category": "Education",
+    "allowMultiple": false,
+    "defaultSection": "centerBegin"
+  }
+}

@@ -1,0 +1,6 @@
+# User data & cache
+progress.json
+*.log
+.DS_Store
+*~
+*.swp
