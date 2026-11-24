@@ -52,6 +52,22 @@ Then reload the shell:
 omarchy restart shell
 ```
 
+## Uninstallation / Removal
+
+1. Remove `learn.linux` from your `~/.config/omarchy/shell.json` bar configuration.
+2. Delete the plugin folder:
+```bash
+rm -rf ~/.config/omarchy/plugins/learn.linux
+```
+3. *(Optional)* Remove saved learning progress data:
+```bash
+rm -rf ~/.config/omarchy/linux-learning
+```
+4. Reload the shell:
+```bash
+omarchy restart shell
+```
+
 ## License
 
 MIT

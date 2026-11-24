@@ -17,6 +17,6 @@
     "description": "Track daily Linux, System Administration, and Cyber Security learning progress.",
     "category": "Education",
     "allowMultiple": false,
-    "defaultSection": "centerBegin"
+    "defaultSection": "center"
   }
 }
