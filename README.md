@@ -1,4 +1,4 @@
-# Linux Learning Hub
+# Omarchy Linux Learning Hub
 
 An interactive learning and daily task tracking bar widget designed for Omarchy Linux and Quickshell.
 
@@ -28,7 +28,7 @@ An interactive learning and daily task tracking bar widget designed for Omarchy 
 ### 1. Clone into your Omarchy plugins directory
 
 ```bash
-git clone https://github.com/omara256/linux-learning-hub.git ~/.config/omarchy/plugins/learn.linux
+git clone https://github.com/omara256/omarchy-linux-learning-hub.git ~/.config/omarchy/plugins/learn.linux
 ```
 
 ### 2. Enable in Omarchy Shell
