@@ -1,0 +1,2741 @@
+{
+  "title": "Linux, System Administration & Cybersecurity Roadmap",
+  "totalDays": 90,
+  "days": [
+    {
+      "id": "day_01",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 1,
+      "title": "Filesystem Hierarchy & Navigation",
+      "desc": "Understand the Linux Directory Tree structure (FHS) and absolute vs relative paths.",
+      "timeMinutes": 45,
+      "cmd": "tree -L 1 /",
+      "commands": [
+        {
+          "cmd": "tree -L 1 /",
+          "desc": "Inspect root directory layout"
+        },
+        {
+          "cmd": "ls -lah /etc /var /usr",
+          "desc": "Explore core system directories"
+        },
+        {
+          "cmd": "pwd && cd -",
+          "desc": "Toggle between previous and current directory"
+        }
+      ],
+      "checklist": [
+        "Explore /, /etc, /var, /usr, /home, /dev, and /proc",
+        "Practice navigation using relative and absolute paths",
+        "Understand what the File Hierarchy Standard (FHS) defines"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_02",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 2,
+      "title": "File & Directory Manipulation",
+      "desc": "Create, copy, move, rename, and securely remove files and directories.",
+      "timeMinutes": 45,
+      "cmd": "mkdir -p lab/{logs,configs,backups}",
+      "commands": [
+        {
+          "cmd": "mkdir -p lab/{logs,configs,backups}",
+          "desc": "Create nested directory tree"
+        },
+        {
+          "cmd": "cp -av /etc/os-release lab/configs/",
+          "desc": "Copy preserving permissions and symlinks"
+        },
+        {
+          "cmd": "rm -ri lab/backups",
+          "desc": "Interactively and safely remove files"
+        }
+      ],
+      "checklist": [
+        "Create a test folder hierarchy using mkdir -p",
+        "Copy directories with cp -r and archive mode cp -a",
+        "Practice safe file removal and understand inode deletion"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_03",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 3,
+      "title": "File Viewing & Pagers",
+      "desc": "Efficiently inspect, search, and paginate through logs and configuration files.",
+      "timeMinutes": 40,
+      "cmd": "less /etc/fstab",
+      "commands": [
+        {
+          "cmd": "less /etc/fstab",
+          "desc": "Navigate with less (/search, n/N, G, 1G)"
+        },
+        {
+          "cmd": "head -n 20 /etc/passwd",
+          "desc": "View the first 20 lines of a file"
+        },
+        {
+          "cmd": "tail -f /var/log/pacman.log",
+          "desc": "Follow a live log stream in real time"
+        }
+      ],
+      "checklist": [
+        "Master navigation inside less (/ for search, g/G for top/bottom)",
+        "View header and footer chunks with head and tail",
+        "Monitor live appending files with tail -f"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_04",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 4,
+      "title": "Standard I/O, Redirection & Pipes",
+      "desc": "Harness stdin (0), stdout (1), stderr (2), redirection operators, and piping.",
+      "timeMinutes": 50,
+      "cmd": "ls -l /etc 2>/dev/null | grep conf",
+      "commands": [
+        {
+          "cmd": "ls -l /etc 2>/dev/null | grep conf",
+          "desc": "Filter stdout while suppressing stderr"
+        },
+        {
+          "cmd": "echo 'test entry' >> output.txt",
+          "desc": "Append output to a file"
+        },
+        {
+          "cmd": "tee lab/summary.log",
+          "desc": "Split output to both stdout and file"
+        }
+      ],
+      "checklist": [
+        "Redirect stdout (>) vs append (>>)",
+        "Redirect stderr to file (2>) or /dev/null (2>/dev/null)",
+        "Combine stdout and stderr (2>&1 or &>)",
+        "Pipe multiple utilities together and use tee"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_05",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 5,
+      "title": "Linux File Permissions (POSIX)",
+      "desc": "Deep dive into read, write, execute permissions for Owner, Group, and Others.",
+      "timeMinutes": 55,
+      "cmd": "ls -ld /tmp /var/log",
+      "commands": [
+        {
+          "cmd": "ls -ld /tmp /var/log",
+          "desc": "Examine directory permission strings"
+        },
+        {
+          "cmd": "chmod 750 script.sh",
+          "desc": "Set permissions using octal notation"
+        },
+        {
+          "cmd": "chmod u=rwx,g=rx,o= file.txt",
+          "desc": "Set permissions using symbolic notation"
+        },
+        {
+          "cmd": "umask",
+          "desc": "Check current default creation mask"
+        }
+      ],
+      "checklist": [
+        "Understand r=4, w=2, x=1 calculation across User, Group, Others",
+        "Differentiate between file execute vs directory execute (traverse)",
+        "Calculate file modes created under default umask (022 / 027)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_06",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 6,
+      "title": "File Ownership & Special Permissions",
+      "desc": "Manage ownership (chown, chgrp) and understand SUID, SGID, and the Sticky Bit.",
+      "timeMinutes": 55,
+      "cmd": "sudo chown -R $USER:$USER lab/",
+      "commands": [
+        {
+          "cmd": "sudo chown -R $USER:$USER lab/",
+          "desc": "Recursively change user and group ownership"
+        },
+        {
+          "cmd": "find /usr/bin -perm -4000 -ls 2>/dev/null",
+          "desc": "Audit all SUID binaries on system"
+        },
+        {
+          "cmd": "chmod +t shared_dir/",
+          "desc": "Set the Sticky Bit on a directory"
+        }
+      ],
+      "checklist": [
+        "Change user and group ownership with chown and chgrp",
+        "Understand how SUID (chmod 4755) executes with owner privilege",
+        "Understand SGID on directories (inherited group ownership)",
+        "Understand Sticky Bit (chmod 1777 /tmp) preventing unauthorized file deletion"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_07",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 7,
+      "title": "Links: Hard Links vs Symlinks",
+      "desc": "Understand inodes, filesystem linkages, and symlinks vs hard links.",
+      "timeMinutes": 45,
+      "cmd": "ln -s /etc/hosts ~/my_hosts_link",
+      "commands": [
+        {
+          "cmd": "ln -s /etc/hosts ~/my_hosts_link",
+          "desc": "Create a symbolic (soft) link"
+        },
+        {
+          "cmd": "ln file.txt hardlink.txt",
+          "desc": "Create a hard link sharing the same inode"
+        },
+        {
+          "cmd": "ls -i",
+          "desc": "Inspect file inode numbers"
+        }
+      ],
+      "checklist": [
+        "Create both soft and hard links",
+        "Verify inode numbers using ls -i or stat",
+        "Understand why hard links cannot span separate filesystems"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_08",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 8,
+      "title": "Locating Files: find, which, locate",
+      "desc": "Search filesystems efficiently by name, size, modification time, and permissions.",
+      "timeMinutes": 50,
+      "cmd": "find /etc -name '*.conf' -size +10k",
+      "commands": [
+        {
+          "cmd": "find /etc -name '*.conf' -size +10k",
+          "desc": "Find config files larger than 10KB"
+        },
+        {
+          "cmd": "find /var/log -mtime -7 -type f",
+          "desc": "Find logs modified in the last 7 days"
+        },
+        {
+          "cmd": "find . -name '*.tmp' -delete",
+          "desc": "Find and delete files matching pattern"
+        }
+      ],
+      "checklist": [
+        "Master find criteria: -type, -name, -size, -mtime",
+        "Execute actions on found files using -exec or -delete",
+        "Understand difference between which, whereis, and find"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_09",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 9,
+      "title": "Text Searching with grep & ripgrep",
+      "desc": "Master regular expressions, case-insensitive searching, and recursive lookups.",
+      "timeMinutes": 45,
+      "cmd": "grep -rnE 'user|password' /etc/ 2>/dev/null",
+      "commands": [
+        {
+          "cmd": "grep -rnE 'user|password' /etc/ 2>/dev/null",
+          "desc": "Recursive regex search"
+        },
+        {
+          "cmd": "grep -v '^#' /etc/locale.gen | grep -v '^$'",
+          "desc": "Strip comments and empty lines"
+        },
+        {
+          "cmd": "rg 'export PATH' ~/.config/",
+          "desc": "Fast recursive search with ripgrep"
+        }
+      ],
+      "checklist": [
+        "Use grep flags: -i (ignore case), -r (recursive), -n (line number), -v (invert)",
+        "Write basic regular expressions: ^ (start), $ (end), . (wildcard), [] (classes)",
+        "Practice filtering active configuration directives without comment noise"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_10",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 10,
+      "title": "Streams: sort, uniq, cut, tr",
+      "desc": "Combine stream utilities to slice, transform, count, and sort structured data.",
+      "timeMinutes": 45,
+      "cmd": "cut -d: -f1,7 /etc/passwd",
+      "commands": [
+        {
+          "cmd": "cut -d: -f1,7 /etc/passwd",
+          "desc": "Extract usernames and default login shells"
+        },
+        {
+          "cmd": "cat /var/log/pacman.log | sort | uniq -c | sort -nr | head -n 10",
+          "desc": "Count unique occurrences"
+        },
+        {
+          "cmd": "tr '[:lower:]' '[:upper:]' < file.txt",
+          "desc": "Translate characters on the fly"
+        }
+      ],
+      "checklist": [
+        "Slice delimited columns with cut -d -f",
+        "Count frequency of items with sort | uniq -c | sort -nr",
+        "Transform characters and whitespace with tr"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_11",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 11,
+      "title": "Process Basics: ps, top, btop",
+      "desc": "Identify running processes, understand PIDs, PPIDs, and monitor system resources.",
+      "timeMinutes": 45,
+      "cmd": "ps aux | grep systemd",
+      "commands": [
+        {
+          "cmd": "ps aux | grep systemd",
+          "desc": "List processes matching keyword"
+        },
+        {
+          "cmd": "ps -ef --forest",
+          "desc": "View process tree showing parent-child hierarchy"
+        },
+        {
+          "cmd": "btop",
+          "desc": "Modern interactive terminal system monitor"
+        }
+      ],
+      "checklist": [
+        "Understand Process IDs (PID) and Parent Process IDs (PPID)",
+        "Read process state codes: R (running), S (sleeping), Z (zombie), D (disk sleep)",
+        "Navigate btop to inspect CPU, Memory, Disk, and Network per-process"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_12",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 12,
+      "title": "Job Control & Process Signals",
+      "desc": "Manage foreground/background jobs and send signals (SIGTERM, SIGKILL, SIGHUP).",
+      "timeMinutes": 50,
+      "cmd": "sleep 100 &",
+      "commands": [
+        {
+          "cmd": "sleep 100 &",
+          "desc": "Start job in background"
+        },
+        {
+          "cmd": "jobs -l && fg %1",
+          "desc": "List jobs and bring job 1 to foreground"
+        },
+        {
+          "cmd": "kill -15 <pid> || kill -9 <pid>",
+          "desc": "Send graceful SIGTERM, fallback to SIGKILL"
+        }
+      ],
+      "checklist": [
+        "Use Ctrl+Z to suspend and bg / fg to control jobs",
+        "Understand key signals: SIGTERM (15), SIGKILL (9), SIGHUP (1), SIGINT (2)",
+        "Use pkill and killall safely"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_13",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 13,
+      "title": "Compression & Archiving: tar, gzip, zstd",
+      "desc": "Create, inspect, and extract tarballs and compressed archives.",
+      "timeMinutes": 40,
+      "cmd": "tar -czvf backup.tar.gz lab/",
+      "commands": [
+        {
+          "cmd": "tar -czvf backup.tar.gz lab/",
+          "desc": "Create gzip-compressed tar archive"
+        },
+        {
+          "cmd": "tar -tf backup.tar.gz",
+          "desc": "Inspect contents without extracting"
+        },
+        {
+          "cmd": "tar -xzvf backup.tar.gz -C /tmp/",
+          "desc": "Extract archive to destination directory"
+        }
+      ],
+      "checklist": [
+        "Understand difference between archiving (tar) and compression (gzip/zstd/xz)",
+        "Master flags: -c (create), -x (extract), -v (verbose), -f (file), -z (gzip)",
+        "Safely inspect archive contents with -t before extraction"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_14",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 14,
+      "title": "Environment Variables & Dotfiles",
+      "desc": "Manage environment variables ($PATH, $HOME), aliases, and shell configuration files.",
+      "timeMinutes": 45,
+      "cmd": "printenv | grep -E 'PATH|USER|SHELL'",
+      "commands": [
+        {
+          "cmd": "printenv | grep -E 'PATH|USER|SHELL'",
+          "desc": "Inspect core environment variables"
+        },
+        {
+          "cmd": "export MY_VAR='Omarchy'",
+          "desc": "Export variable to child processes"
+        },
+        {
+          "cmd": "alias ll='ls -lah --color=auto'",
+          "desc": "Define interactive command alias"
+        }
+      ],
+      "checklist": [
+        "Understand difference between shell variables and exported environment variables",
+        "Understand how $PATH resolution works",
+        "Inspect user profile load order (~/.bashrc, ~/.profile, ~/.config/)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_15",
+      "track": "foundations",
+      "trackName": "Foundations",
+      "phase": 1,
+      "phaseName": "Linux Foundations & Shell Mastery",
+      "day": 15,
+      "title": "Phase 1 Lab & Practical Assessment",
+      "desc": "Hands-on challenge consolidating filesystem, permissions, and text processing.",
+      "timeMinutes": 60,
+      "cmd": "find /etc -type f -name '*.conf' -exec grep -H '127.0.0.1' {} +",
+      "commands": [
+        {
+          "cmd": "find /etc -type f -name '*.conf' -exec grep -H '127.0.0.1' {} +",
+          "desc": "Comprehensive pipeline lookup"
+        },
+        {
+          "cmd": "history | tail -n 25",
+          "desc": "Review recent command mastery"
+        }
+      ],
+      "checklist": [
+        "Build a multi-level lab directory and assign specific user/group permissions",
+        "Write a one-liner to find the 5 largest files in /var/log",
+        "Create an archive backup of your lab and test extracting it"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_16",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 16,
+      "title": "Bash Script Structure & Shebang",
+      "desc": "Write your first proper shell script with defensive header settings.",
+      "timeMinutes": 45,
+      "cmd": "#!/usr/bin/env bash\nset -euo pipefail",
+      "commands": [
+        {
+          "cmd": "#!/usr/bin/env bash\nset -euo pipefail",
+          "desc": "Standard robust script prologue"
+        },
+        {
+          "cmd": "chmod +x my_script.sh && ./my_script.sh",
+          "desc": "Mark executable and run"
+        }
+      ],
+      "checklist": [
+        "Understand the shebang line (#!/usr/bin/env bash)",
+        "Understand 'set -euo pipefail' for strict error handling",
+        "Understand exit statuses ($?) and exit 0 vs exit 1"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_17",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 17,
+      "title": "Variables, Arguments & Quotes",
+      "desc": "Master script arguments ($1, $#, $@), double vs single quotes, and command substitution.",
+      "timeMinutes": 50,
+      "cmd": "TIMESTAMP=$(date +%Y-%m-%d_%H%M%S)",
+      "commands": [
+        {
+          "cmd": "TIMESTAMP=$(date +%Y-%m-%d_%H%M%S)",
+          "desc": "Command substitution with $()"
+        },
+        {
+          "cmd": "echo \"First argument: ${1:-'default_val'}\"",
+          "desc": "Parameter expansion with fallback"
+        }
+      ],
+      "checklist": [
+        "Handle command-line positional arguments ($1, $2, $#, $@)",
+        "Differentiate between single quotes (literal) and double quotes (interpolated)",
+        "Use variable parameter expansion (${var:-default}, ${#var})"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_18",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 18,
+      "title": "Conditionals & Comparison Operators",
+      "desc": "Evaluate file states and numeric/string comparisons using [[ ... ]].",
+      "timeMinutes": 50,
+      "cmd": "[[ -f /etc/passwd ]] && echo 'File exists'",
+      "commands": [
+        {
+          "cmd": "[[ -f /etc/passwd ]] && echo 'File exists'",
+          "desc": "File test operator"
+        },
+        {
+          "cmd": "[[ $USER == 'omara' ]] && echo 'Authorized'",
+          "desc": "String comparison"
+        },
+        {
+          "cmd": "[[ 10 -gt 5 ]] && echo 'Greater'",
+          "desc": "Numeric comparison (-eq, -ne, -lt, -gt)"
+        }
+      ],
+      "checklist": [
+        "Use file tests: -f (file), -d (dir), -e (exists), -r (readable), -w (writable)",
+        "Use string comparison (==, !=, -z for empty, -n for not empty)",
+        "Structure if-then-elif-else-fi blocks cleanly"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_19",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 19,
+      "title": "Loops: for, while, and read",
+      "desc": "Iterate over lists, files, and read lines from command streams safely.",
+      "timeMinutes": 50,
+      "cmd": "for f in *.txt; do echo \"File: $f\"; done",
+      "commands": [
+        {
+          "cmd": "for f in *.txt; do echo \"File: $f\"; done",
+          "desc": "Iterate over matching glob items"
+        },
+        {
+          "cmd": "while IFS= read -r line; do echo \"Line: $line\"; done < /etc/hosts",
+          "desc": "Safely read file line by line"
+        }
+      ],
+      "checklist": [
+        "Construct for loops over arrays and globs",
+        "Read file lines safely using 'while IFS= read -r line'",
+        "Use break and continue appropriately in loops"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_20",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 20,
+      "title": "Functions & Variable Scope",
+      "desc": "Modularize code with reusable functions and local variable scoping.",
+      "timeMinutes": 50,
+      "cmd": "log_msg() { local msg=\"$1\"; echo \"[$(date +%T)] $msg\"; }",
+      "commands": [
+        {
+          "cmd": "log_msg() { local msg=\"$1\"; echo \"[$(date +%T)] $msg\"; }",
+          "desc": "Function with local variable"
+        }
+      ],
+      "checklist": [
+        "Define functions and pass positional parameters",
+        "Always declare internal function variables with 'local'",
+        "Return values using echo and captured subshells or return codes"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_21",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 21,
+      "title": "Stream Editing with sed",
+      "desc": "Search, replace, insert, and delete lines in files programmatically.",
+      "timeMinutes": 50,
+      "cmd": "sed 's/localhost/127.0.0.1/g' config.txt",
+      "commands": [
+        {
+          "cmd": "sed 's/localhost/127.0.0.1/g' config.txt",
+          "desc": "Substitute text in stream"
+        },
+        {
+          "cmd": "sed -i.bak 's/DEBUG=true/DEBUG=false/' app.conf",
+          "desc": "In-place edit with automatic backup"
+        },
+        {
+          "cmd": "sed '/^#/d' file.txt",
+          "desc": "Delete matching lines"
+        }
+      ],
+      "checklist": [
+        "Use the substitute command: s/pattern/replacement/flags",
+        "Understand delimiters and global replacement (/g)",
+        "Use in-place editing (-i) responsibly with safety backups"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_22",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 22,
+      "title": "Data Processing with awk",
+      "desc": "Extract, format, and compute structured column data using awk.",
+      "timeMinutes": 55,
+      "cmd": "awk -F: '{print $1, $3}' /etc/passwd",
+      "commands": [
+        {
+          "cmd": "awk -F: '{print $1, $3}' /etc/passwd",
+          "desc": "Print fields with custom delimiter"
+        },
+        {
+          "cmd": "df -h | awk '$5 > 80 {print $1, $5}'",
+          "desc": "Filter rows by column threshold"
+        },
+        {
+          "cmd": "awk '{sum += $1} END {print sum}' numbers.txt",
+          "desc": "Calculate aggregate sums"
+        }
+      ],
+      "checklist": [
+        "Understand awk record and field concepts ($0, $1, $NF, NR)",
+        "Use BEGIN and END blocks for header and summary outputs",
+        "Filter tabular output from df, ps, and netstat"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_23",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 23,
+      "title": "Automation Project: Daily Health Check Script",
+      "desc": "Build a real Bash script that checks disk space, RAM usage, load, and failed services.",
+      "timeMinutes": 60,
+      "cmd": "cat << 'EOF' > healthcheck.sh\n#!/bin/bash\nuptime\nfree -h\ndf -h /\nEOF",
+      "commands": [
+        {
+          "cmd": "cat << 'EOF' > healthcheck.sh\n#!/bin/bash\nuptime\nfree -h\ndf -h /\nEOF",
+          "desc": "Scaffold health check script"
+        }
+      ],
+      "checklist": [
+        "Gather CPU load, free memory percentage, and root disk usage",
+        "Check systemctl --failed units programmatically",
+        "Format clean summary report output with colored alerts"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_24",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 24,
+      "title": "Automation Project: Automated Backup Script",
+      "desc": "Build an automated backup script using tar or rsync with rotation.",
+      "timeMinutes": 60,
+      "cmd": "rsync -avz --delete /home/omara/Work/ /tmp/backup_work/",
+      "commands": [
+        {
+          "cmd": "rsync -avz --delete /home/omara/Work/ /tmp/backup_work/",
+          "desc": "Differential directory sync"
+        }
+      ],
+      "checklist": [
+        "Create compressed timestamped archives of designated folders",
+        "Implement 7-day retention cleanup using find -mtime +7 -delete",
+        "Add logging and error traps with trap 'echo Error' ERR"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_25",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 25,
+      "title": "Parsing JSON with jq",
+      "desc": "Parse, filter, and transform modern JSON API outputs and configs.",
+      "timeMinutes": 45,
+      "cmd": "hyprctl activewindow -j | jq '.title, .class'",
+      "commands": [
+        {
+          "cmd": "hyprctl activewindow -j | jq '.title, .class'",
+          "desc": "Query Wayland window metadata"
+        },
+        {
+          "cmd": "curl -s https://ipapi.co/json | jq '{ip, city, org}'",
+          "desc": "Extract fields from HTTP API"
+        }
+      ],
+      "checklist": [
+        "Access object keys and array elements with jq",
+        "Filter array records with select()",
+        "Construct new JSON objects from shell scripts"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_26",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 26,
+      "title": "Handling Errors & Traps",
+      "desc": "Defensive scripting: handling interruptions, cleanups, and temporary files.",
+      "timeMinutes": 45,
+      "cmd": "TMP=$(mktemp -d); trap 'rm -rf \"$TMP\"' EXIT",
+      "commands": [
+        {
+          "cmd": "TMP=$(mktemp -d); trap 'rm -rf \"$TMP\"' EXIT",
+          "desc": "Self-cleaning temporary directory pattern"
+        }
+      ],
+      "checklist": [
+        "Use mktemp to prevent insecure predictable temporary files",
+        "Trap EXIT, SIGINT, and SIGTERM to clean up state files",
+        "Handle command failures with graceful fallbacks"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_27",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 27,
+      "title": "Interactive Scripts with gum",
+      "desc": "Build elegant terminal dialogs, spinners, input boxes, and confirm prompts.",
+      "timeMinutes": 50,
+      "cmd": "gum confirm 'Proceed with operation?' && echo 'Confirmed'",
+      "commands": [
+        {
+          "cmd": "gum confirm 'Proceed with operation?' && echo 'Confirmed'",
+          "desc": "Interactive confirmation prompt"
+        },
+        {
+          "cmd": "gum choose 'Linux' 'SysAdmin' 'CyberSecurity'",
+          "desc": "Fuzzy selection menu"
+        }
+      ],
+      "checklist": [
+        "Use gum input and gum write for user inputs",
+        "Use gum choose and gum filter for interactive menus",
+        "Style terminal scripts with colors, borders, and spinners"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_28",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 28,
+      "title": "Cron & At: Traditional Scheduling",
+      "desc": "Understand crontab syntax, scheduled intervals, and execution environments.",
+      "timeMinutes": 45,
+      "cmd": "crontab -l 2>/dev/null",
+      "commands": [
+        {
+          "cmd": "crontab -l 2>/dev/null",
+          "desc": "List current user crontabs"
+        },
+        {
+          "cmd": "echo '0 2 * * * /path/to/backup.sh' | crontab -",
+          "desc": "Schedule nightly 2 AM job"
+        }
+      ],
+      "checklist": [
+        "Decipher the 5 cron fields: min, hour, day, month, day-of-week",
+        "Understand why cron runs in minimal environment without your normal $PATH",
+        "Redirect cron job stdout and stderr to log files"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_29",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 29,
+      "title": "Git Basics for SysAdmins & Security",
+      "desc": "Track configuration files, dotfiles, and security automation scripts in git.",
+      "timeMinutes": 50,
+      "cmd": "git init && git add . && git commit -m 'Initial commit'",
+      "commands": [
+        {
+          "cmd": "git init && git add . && git commit -m 'Initial commit'",
+          "desc": "Initialize repo and commit"
+        },
+        {
+          "cmd": "git log --oneline --graph",
+          "desc": "Review commit history"
+        },
+        {
+          "cmd": "git diff",
+          "desc": "Inspect pending configuration changes"
+        }
+      ],
+      "checklist": [
+        "Version control configuration directories with git",
+        "Understand branching, staging, and diffs",
+        "Use .gitignore to prevent committing secrets, keys, and tokens"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_30",
+      "track": "scripting",
+      "trackName": "Scripting",
+      "phase": 2,
+      "phaseName": "Shell Scripting & Automation",
+      "day": 30,
+      "title": "Phase 2 Lab: Build a Modular CLI Tool",
+      "desc": "Combine Bash, jq, and functions into a complete operational tool.",
+      "timeMinutes": 60,
+      "cmd": "bash --version",
+      "commands": [
+        {
+          "cmd": "bash --version",
+          "desc": "Verify Bash capabilities"
+        }
+      ],
+      "checklist": [
+        "Build a multi-subcommand script (e.g., tool status, tool backup, tool clean)",
+        "Incorporate arguments, help menu (--help), and exit status checks",
+        "Verify the script executes cleanly with zero ShellCheck warnings"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_31",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 31,
+      "title": "systemd Overview & Architecture",
+      "desc": "Understand systemd as PID 1, targets, units, and the boot sequence.",
+      "timeMinutes": 50,
+      "cmd": "systemctl status",
+      "commands": [
+        {
+          "cmd": "systemctl status",
+          "desc": "View overall system control status"
+        },
+        {
+          "cmd": "systemd-analyze blame",
+          "desc": "Identify services slowing down system boot"
+        },
+        {
+          "cmd": "systemctl get-default",
+          "desc": "Check default boot target (multi-user vs graphical)"
+        }
+      ],
+      "checklist": [
+        "Understand systemd responsibilities: init, cgroups, logging, timers",
+        "Differentiate between Unit types: .service, .socket, .target, .timer",
+        "Analyze boot performance with systemd-analyze"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_32",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 32,
+      "title": "Managing Services with systemctl",
+      "desc": "Start, stop, restart, enable, disable, and reload system services.",
+      "timeMinutes": 45,
+      "cmd": "systemctl is-active sshd || echo 'Inactive'",
+      "commands": [
+        {
+          "cmd": "systemctl is-active sshd || echo 'Inactive'",
+          "desc": "Check if service is active"
+        },
+        {
+          "cmd": "systemctl is-enabled systemd-timesyncd",
+          "desc": "Check if enabled on boot"
+        },
+        {
+          "cmd": "systemctl --failed",
+          "desc": "List failed units across system"
+        }
+      ],
+      "checklist": [
+        "Differentiate between start/stop (runtime) and enable/disable (boot autostart)",
+        "Understand 'mask' to prevent services from being started accidentally",
+        "Troubleshoot failed units with systemctl status <unit>"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_33",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 33,
+      "title": "Writing Custom systemd Service Units",
+      "desc": "Create, test, and install custom service files in /etc/systemd/system/.",
+      "timeMinutes": 55,
+      "cmd": "cat /usr/lib/systemd/system/sshd.service",
+      "commands": [
+        {
+          "cmd": "cat /usr/lib/systemd/system/sshd.service",
+          "desc": "Examine a standard service unit definition"
+        },
+        {
+          "cmd": "sudo systemctl daemon-reload",
+          "desc": "Reload systemd manager after editing units"
+        }
+      ],
+      "checklist": [
+        "Understand sections: [Unit], [Service], [Install]",
+        "Configure ExecStart, Restart=always, and User isolation",
+        "Deploy a custom daemon service and verify with systemctl status"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_34",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 34,
+      "title": "systemd Timers (Modern Cron Replacement)",
+      "desc": "Create systemd timer units for reliable, loggable task scheduling.",
+      "timeMinutes": 50,
+      "cmd": "systemctl list-timers",
+      "commands": [
+        {
+          "cmd": "systemctl list-timers",
+          "desc": "List all active timers and next run times"
+        },
+        {
+          "cmd": "systemctl cat shadow.timer",
+          "desc": "View example timer unit definition"
+        }
+      ],
+      "checklist": [
+        "Understand monotonic timers (OnBootSec) vs real-time timers (OnCalendar)",
+        "Link a .timer unit with its sibling .service unit",
+        "Schedule a daily maintenance task using systemd timers"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_35",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 35,
+      "title": "Centralized Logging with journalctl",
+      "desc": "Query binary systemd journal logs by unit, time, priority, and boot index.",
+      "timeMinutes": 50,
+      "cmd": "journalctl -b -p err..emerg",
+      "commands": [
+        {
+          "cmd": "journalctl -b -p err..emerg",
+          "desc": "Show errors from current boot only"
+        },
+        {
+          "cmd": "journalctl -u sshd -n 50 --no-pager",
+          "desc": "View last 50 log lines for sshd"
+        },
+        {
+          "cmd": "journalctl --since '1 hour ago'",
+          "desc": "Filter logs by relative timestamp"
+        }
+      ],
+      "checklist": [
+        "Filter logs by unit (-u), boot (-b), and priority (-p err)",
+        "Follow live journal output with -f",
+        "Understand journal disk usage and vacuuming (journalctl --vacuum-size)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_36",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 36,
+      "title": "User & Group Administration",
+      "desc": "Manage users, groups, default shells, and account locking.",
+      "timeMinutes": 50,
+      "cmd": "id $USER",
+      "commands": [
+        {
+          "cmd": "id $USER",
+          "desc": "View UID, GID, and supplementary groups"
+        },
+        {
+          "cmd": "sudo useradd -m -s /bin/bash testuser",
+          "desc": "Create user with home directory"
+        },
+        {
+          "cmd": "sudo usermod -aG wheel,audio testuser",
+          "desc": "Append user to groups"
+        }
+      ],
+      "checklist": [
+        "Understand /etc/passwd, /etc/shadow, and /etc/group files",
+        "Create, modify, and delete users with useradd, usermod, userdel",
+        "Lock accounts with passwd -l or usermod -L"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_37",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 37,
+      "title": "Sudoers & Privilege Delegation",
+      "desc": "Safely grant administrative privileges without sharing root credentials.",
+      "timeMinutes": 50,
+      "cmd": "sudo visudo -c",
+      "commands": [
+        {
+          "cmd": "sudo visudo -c",
+          "desc": "Check sudoers syntax for errors"
+        },
+        {
+          "cmd": "cat /etc/sudoers.d/* 2>/dev/null",
+          "desc": "Inspect drop-in sudo configurations"
+        }
+      ],
+      "checklist": [
+        "Always edit sudoers with visudo to prevent syntax lockouts",
+        "Understand user/group privilege specification rules",
+        "Grant granular command execution without password prompts (NOPASSWD) securely"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_38",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 38,
+      "title": "Arch Linux Package Management: pacman",
+      "desc": "Install, update, query, search, and clean system packages.",
+      "timeMinutes": 45,
+      "cmd": "pacman -Qi linux",
+      "commands": [
+        {
+          "cmd": "pacman -Qi linux",
+          "desc": "Query detailed package metadata"
+        },
+        {
+          "cmd": "pacman -Qo /usr/bin/hyprland",
+          "desc": "Identify which package owns a specific file"
+        },
+        {
+          "cmd": "pacman -Qdt",
+          "desc": "List orphaned packages no longer needed"
+        }
+      ],
+      "checklist": [
+        "Master core operations: -S (sync), -R (remove), -Q (query), -U (file install)",
+        "Clean package cache responsibly (paccache -r)",
+        "Remove packages and their unused dependencies (-Rns)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_39",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 39,
+      "title": "The Arch User Repository (AUR) & Makepkg",
+      "desc": "Understand PKGBUILD recipes, source integrity verification, and makepkg.",
+      "timeMinutes": 50,
+      "cmd": "omarchy pkg aur list 2>/dev/null || pacman -Qm",
+      "commands": [
+        {
+          "cmd": "omarchy pkg aur list 2>/dev/null || pacman -Qm",
+          "desc": "List foreign/AUR packages"
+        },
+        {
+          "cmd": "cat PKGBUILD 2>/dev/null || true",
+          "desc": "Inspect package build recipe structure"
+        }
+      ],
+      "checklist": [
+        "Read and audit PKGBUILD variables (pkgname, source, sha256sums)",
+        "Understand build stages: prepare(), build(), package()",
+        "Never run makepkg as root"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_40",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 40,
+      "title": "Linux Kernel & Module Management",
+      "desc": "Inspect the running Linux kernel, load/unload kernel modules, and view parameters.",
+      "timeMinutes": 45,
+      "cmd": "uname -a",
+      "commands": [
+        {
+          "cmd": "uname -a",
+          "desc": "View kernel version and architecture"
+        },
+        {
+          "cmd": "lsmod | head -n 15",
+          "desc": "List currently loaded kernel modules"
+        },
+        {
+          "cmd": "modinfo loop",
+          "desc": "Display metadata for a kernel module"
+        }
+      ],
+      "checklist": [
+        "Inspect loaded modules with lsmod and details with modinfo",
+        "Understand modprobe to load and modprobe -r to unload modules",
+        "Understand kernel blacklisting in /etc/modprobe.d/"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_41",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 41,
+      "title": "Kernel Runtime Parameters: sysctl",
+      "desc": "Tune live kernel networking and memory parameters in /proc/sys/.",
+      "timeMinutes": 45,
+      "cmd": "sysctl net.ipv4.ip_forward",
+      "commands": [
+        {
+          "cmd": "sysctl net.ipv4.ip_forward",
+          "desc": "Check IP routing forward state"
+        },
+        {
+          "cmd": "sysctl vm.swappiness",
+          "desc": "Check swap usage aggressiveness"
+        }
+      ],
+      "checklist": [
+        "View and set runtime parameters with sysctl",
+        "Persist kernel tuning in /etc/sysctl.d/*.conf",
+        "Understand security parameters (e.g., rp_filter, disable_ipv6, ptrace_scope)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_42",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 42,
+      "title": "Storage Basics: Disks, Partitions & Mounts",
+      "desc": "Inspect block devices, partition tables (GPT/MBR), and filesystem mounts.",
+      "timeMinutes": 55,
+      "cmd": "lsblk -f",
+      "commands": [
+        {
+          "cmd": "lsblk -f",
+          "desc": "List block devices with filesystems and UUIDs"
+        },
+        {
+          "cmd": "cat /etc/fstab",
+          "desc": "View persistent mount table"
+        },
+        {
+          "cmd": "findmnt",
+          "desc": "Display hierarchical mount tree"
+        }
+      ],
+      "checklist": [
+        "Identify block devices (e.g. nvme0n1, sda, loop0)",
+        "Understand filesystem UUIDs vs device names",
+        "Read /etc/fstab structure (device, mountpoint, fstype, options, dump, pass)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_43",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 43,
+      "title": "Modern Filesystems: Btrfs & Snapshots",
+      "desc": "Understand copy-on-write (CoW), subvolumes, and filesystem snapshots.",
+      "timeMinutes": 50,
+      "cmd": "sudo btrfs subvolume list / 2>/dev/null || df -T",
+      "commands": [
+        {
+          "cmd": "sudo btrfs subvolume list / 2>/dev/null || df -T",
+          "desc": "Check subvolume layout"
+        },
+        {
+          "cmd": "snapper list 2>/dev/null || true",
+          "desc": "View snapshot timeline"
+        }
+      ],
+      "checklist": [
+        "Understand Copy-on-Write (CoW) advantages and trade-offs",
+        "Understand subvolumes as independent filesystem branches",
+        "Understand atomic snapshot backups and rollbacks"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_44",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 44,
+      "title": "Memory, Swap & OOM Killer",
+      "desc": "Monitor memory pressure, zram swap compression, and OOM killer behavior.",
+      "timeMinutes": 45,
+      "cmd": "free -h",
+      "commands": [
+        {
+          "cmd": "free -h",
+          "desc": "Examine memory buffers, cache, and swap"
+        },
+        {
+          "cmd": "swapon --show",
+          "desc": "List active swap devices and priorities"
+        },
+        {
+          "cmd": "zramctl 2>/dev/null || true",
+          "desc": "Inspect compressed in-RAM swap"
+        }
+      ],
+      "checklist": [
+        "Differentiate between used, free, buffers, and available memory",
+        "Understand zram / compressed swap advantages",
+        "Review dmesg/journalctl for Out-Of-Memory (OOM) invocation logs"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_45",
+      "track": "sysadmin",
+      "trackName": "SysAdmin",
+      "phase": 3,
+      "phaseName": "System Administration & Services",
+      "day": 45,
+      "title": "Phase 3 Lab: SysAdmin Incident Response",
+      "desc": "Troubleshoot simulated service failure, disk alert, and rogue process.",
+      "timeMinutes": 60,
+      "cmd": "systemctl --user --failed",
+      "commands": [
+        {
+          "cmd": "systemctl --user --failed",
+          "desc": "Check for user unit failures"
+        },
+        {
+          "cmd": "df -h",
+          "desc": "Verify storage levels"
+        }
+      ],
+      "checklist": [
+        "Diagnose a crashing service unit using journalctl -u <unit>",
+        "Write a systemd timer that backs up /etc nightly and logs results",
+        "Audit orphan packages and clean package caches safely"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_46",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 46,
+      "title": "Network Interfaces & IP Configuration",
+      "desc": "Use the modern iproute2 suite (ip addr, ip link, ip route).",
+      "timeMinutes": 50,
+      "cmd": "ip -br addr show",
+      "commands": [
+        {
+          "cmd": "ip -br addr show",
+          "desc": "Brief view of network interfaces and IPs"
+        },
+        {
+          "cmd": "ip route show",
+          "desc": "View routing table and default gateway"
+        },
+        {
+          "cmd": "ip link show",
+          "desc": "Inspect interface states and MAC addresses"
+        }
+      ],
+      "checklist": [
+        "Understand interface naming (eth0, wlan0, enp3s0, lo)",
+        "Read IPv4 and IPv6 CIDR notations (/24, /64)",
+        "Trace default gateway route resolution"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_47",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 47,
+      "title": "Sockets & Port Inspection: ss & netstat",
+      "desc": "Discover open ports, active connections, and listening server daemons.",
+      "timeMinutes": 45,
+      "cmd": "ss -tulpn",
+      "commands": [
+        {
+          "cmd": "ss -tulpn",
+          "desc": "List TCP/UDP listening sockets with process names"
+        },
+        {
+          "cmd": "ss -tan state established",
+          "desc": "List established connections"
+        },
+        {
+          "cmd": "lsof -i :22 2>/dev/null || ss -tlpn sport = :22",
+          "desc": "Inspect processes on port 22"
+        }
+      ],
+      "checklist": [
+        "Understand TCP three-way handshake and connection states",
+        "Identify listening sockets (0.0.0.0 vs 127.0.0.1 binding security)",
+        "Correlate open listening ports to PID and process executable"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_48",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 48,
+      "title": "DNS Fundamentals & Resolution (dig, drill, nslookup)",
+      "desc": "Understand DNS record types (A, AAAA, CNAME, MX, TXT, PTR) and resolution order.",
+      "timeMinutes": 50,
+      "cmd": "cat /etc/resolv.conf",
+      "commands": [
+        {
+          "cmd": "cat /etc/resolv.conf",
+          "desc": "Check configured nameservers"
+        },
+        {
+          "cmd": "drill archlinux.org || dig archlinux.org",
+          "desc": "Query DNS A records"
+        },
+        {
+          "cmd": "getent hosts archlinux.org",
+          "desc": "Check system resolver resolution"
+        }
+      ],
+      "checklist": [
+        "Understand /etc/nsswitch.conf and hosts resolution priority",
+        "Query DNS records with dig or drill",
+        "Understand local DNS caching with systemd-resolved"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_49",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 49,
+      "title": "Network Diagnostics: ping, traceroute, mtr",
+      "desc": "Troubleshoot latency, packet loss, and routing path hops.",
+      "timeMinutes": 45,
+      "cmd": "ping -c 4 1.1.1.1",
+      "commands": [
+        {
+          "cmd": "ping -c 4 1.1.1.1",
+          "desc": "Send 4 ICMP echo requests to verify connectivity"
+        },
+        {
+          "cmd": "traceroute -n 1.1.1.1 2>/dev/null || tracepath 1.1.1.1",
+          "desc": "Trace network hop path"
+        }
+      ],
+      "checklist": [
+        "Identify latency bottlenecks along a network path",
+        "Diagnose MTU discovery issues with tracepath",
+        "Troubleshoot ICMP blocking on remote firewalls"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_50",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 50,
+      "title": "HTTP, APIs & Transfers: curl & wget",
+      "desc": "Interact with HTTP servers, test endpoints, headers, and download files.",
+      "timeMinutes": 45,
+      "cmd": "curl -I https://archlinux.org",
+      "commands": [
+        {
+          "cmd": "curl -I https://archlinux.org",
+          "desc": "Inspect HTTP response headers"
+        },
+        {
+          "cmd": "curl -s -w 'Time: %{time_total}s\n' -o /dev/null https://google.com",
+          "desc": "Benchmark response latency"
+        },
+        {
+          "cmd": "curl -X POST -H 'Content-Type: application/json' -d '{\"status\":\"ok\"}' <url>",
+          "desc": "Send JSON payload"
+        }
+      ],
+      "checklist": [
+        "Read HTTP status codes (200, 301, 401, 403, 404, 500)",
+        "Follow redirects (-L) and inspect headers (-I)",
+        "Automate API interactions and downloads in scripts"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_51",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 51,
+      "title": "SSH Essentials: Key Pairs & Config",
+      "desc": "Generate Ed25519 keys, configure ~/.ssh/config, and manage authorized_keys.",
+      "timeMinutes": 55,
+      "cmd": "ssh-keygen -t ed25519 -C 'user@omarchy'",
+      "commands": [
+        {
+          "cmd": "ssh-keygen -t ed25519 -C 'user@omarchy'",
+          "desc": "Generate modern secure SSH keypair"
+        },
+        {
+          "cmd": "ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server",
+          "desc": "Install public key to remote host"
+        },
+        {
+          "cmd": "cat ~/.ssh/config 2>/dev/null || true",
+          "desc": "Inspect SSH client aliases and profiles"
+        }
+      ],
+      "checklist": [
+        "Understand asymmetric public/private key cryptography",
+        "Ensure ~/.ssh permissions are strictly 700 and authorized_keys is 600",
+        "Configure SSH client shortcuts in ~/.ssh/config"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_52",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 52,
+      "title": "SSH Server Hardening (sshd_config)",
+      "desc": "Harden OpenSSH daemon to prevent brute-force and credential compromise.",
+      "timeMinutes": 55,
+      "cmd": "sudo sshd -T | grep -E 'passwordauthentication|permitrootlogin'",
+      "commands": [
+        {
+          "cmd": "sudo sshd -T | grep -E 'passwordauthentication|permitrootlogin'",
+          "desc": "Verify active sshd settings"
+        },
+        {
+          "cmd": "grep -E '^PasswordAuthentication|^PermitRootLogin' /etc/ssh/sshd_config 2>/dev/null || true",
+          "desc": "Inspect sshd config"
+        }
+      ],
+      "checklist": [
+        "Disable PasswordAuthentication in favor of keys",
+        "Set PermitRootLogin no or prohibit-password",
+        "Limit allowed users with AllowUsers or AllowGroups",
+        "Change or restrict default listening ports"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_53",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 53,
+      "title": "SSH Port Forwarding & Tunnels",
+      "desc": "Local port forwarding (-L), remote forwarding (-R), and dynamic SOCKS5 proxy (-D).",
+      "timeMinutes": 55,
+      "cmd": "ssh -L 8080:localhost:80 user@remote-host",
+      "commands": [
+        {
+          "cmd": "ssh -L 8080:localhost:80 user@remote-host",
+          "desc": "Forward local port 8080 to remote port 80"
+        },
+        {
+          "cmd": "ssh -D 1080 -N user@remote-host",
+          "desc": "Create dynamic SOCKS5 proxy tunnel"
+        }
+      ],
+      "checklist": [
+        "Understand local forwarding (-L) to access internal remote services",
+        "Understand remote forwarding (-R) to expose local service outward",
+        "Use SSH dynamic proxy (-D) to route browser traffic securely"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_54",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 54,
+      "title": "Linux Firewall with UFW (Uncomplicated Firewall)",
+      "desc": "Configure host firewall rules, default drop policies, and port allowances.",
+      "timeMinutes": 50,
+      "cmd": "sudo ufw status verbose 2>/dev/null || sudo iptables -L -n",
+      "commands": [
+        {
+          "cmd": "sudo ufw status verbose 2>/dev/null || sudo iptables -L -n",
+          "desc": "Check firewall rule status"
+        },
+        {
+          "cmd": "sudo ufw default deny incoming",
+          "desc": "Enforce strict default drop on incoming traffic"
+        },
+        {
+          "cmd": "sudo ufw allow 22/tcp",
+          "desc": "Allow SSH traffic"
+        }
+      ],
+      "checklist": [
+        "Understand default deny incoming / allow outgoing policy",
+        "Open specific service ports (TCP 22, 80, 443)",
+        "Rate limit connections to prevent brute force (ufw limit ssh)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_55",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 55,
+      "title": "Modern Packet Filtering: nftables & iptables",
+      "desc": "Understand packet filtering chains (INPUT, OUTPUT, FORWARD) and stateful filtering.",
+      "timeMinutes": 55,
+      "cmd": "sudo iptables -S 2>/dev/null || true",
+      "commands": [
+        {
+          "cmd": "sudo iptables -S 2>/dev/null || true",
+          "desc": "Display raw iptables rules"
+        },
+        {
+          "cmd": "sudo nft list ruleset 2>/dev/null || true",
+          "desc": "Display nftables ruleset"
+        }
+      ],
+      "checklist": [
+        "Understand tables, chains, and rules hierarchy",
+        "Understand connection tracking (ctstate ESTABLISHED,RELATED)",
+        "Differentiate between DROP (silent discard) and REJECT (explicit ICMP error)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_56",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 56,
+      "title": "Network Name Resolution: systemd-resolved",
+      "desc": "Manage DNS caching, DNS-over-TLS, and per-interface search domains.",
+      "timeMinutes": 45,
+      "cmd": "resolvectl status",
+      "commands": [
+        {
+          "cmd": "resolvectl status",
+          "desc": "View active DNS servers per interface"
+        },
+        {
+          "cmd": "resolvectl statistics",
+          "desc": "View DNS cache hit rates"
+        }
+      ],
+      "checklist": [
+        "Inspect per-link DNS configurations with resolvectl",
+        "Flush local DNS resolver caches (resolvectl flush-caches)",
+        "Understand DNSSEC and DNS-over-TLS (DoT)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_57",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 57,
+      "title": "Remote File Syncing with rsync",
+      "desc": "Perform incremental, delta-compressed file syncs over encrypted SSH.",
+      "timeMinutes": 50,
+      "cmd": "rsync -avzP -e ssh /local/dir/ user@server:/remote/dir/",
+      "commands": [
+        {
+          "cmd": "rsync -avzP -e ssh /local/dir/ user@server:/remote/dir/",
+          "desc": "Sync directory over SSH with progress"
+        },
+        {
+          "cmd": "rsync --dry-run -av --delete src/ dest/",
+          "desc": "Simulate sync before making changes"
+        }
+      ],
+      "checklist": [
+        "Always test risky syncs with --dry-run first",
+        "Understand trailing slash significance: src/ vs src",
+        "Preserve permissions, timestamps, symlinks with -a (archive mode)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_58",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 58,
+      "title": "VPN & Secure Mesh Networks (WireGuard & Tailscale)",
+      "desc": "Understand peer-to-peer mesh networking, encrypted tunnels, and WireGuard cryptography.",
+      "timeMinutes": 50,
+      "cmd": "ip link show type wireguard 2>/dev/null || true",
+      "commands": [
+        {
+          "cmd": "ip link show type wireguard 2>/dev/null || true",
+          "desc": "Check for active WireGuard interfaces"
+        },
+        {
+          "cmd": "tailscale status 2>/dev/null || true",
+          "desc": "Check Tailscale mesh node connectivity"
+        }
+      ],
+      "checklist": [
+        "Understand how WireGuard utilizes Noise protocol and ChaCha20-Poly1305",
+        "Compare traditional client-server VPNs with peer-to-peer mesh networks",
+        "Inspect virtual VPN interface routing"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_59",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 59,
+      "title": "Web Servers & Reverse Proxies (Nginx / Caddy)",
+      "desc": "Understand how reverse proxies route incoming HTTP/S requests to backends.",
+      "timeMinutes": 55,
+      "cmd": "curl -I https://omarchy.org",
+      "commands": [
+        {
+          "cmd": "curl -I https://omarchy.org",
+          "desc": "Examine reverse proxy headers (Server, Via)"
+        }
+      ],
+      "checklist": [
+        "Understand reverse proxy roles: TLS termination, load balancing, caching",
+        "Read simple reverse proxy configuration blocks (proxy_pass)",
+        "Understand automatic HTTPS and ACME Let's Encrypt certificates"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_60",
+      "track": "networking",
+      "trackName": "Networking",
+      "phase": 4,
+      "phaseName": "Networking & Remote Services",
+      "day": 60,
+      "title": "Phase 4 Lab: Hardened Server Bastion Setup",
+      "desc": "Audit open ports, configure a strict firewall, and enforce key-only SSH.",
+      "timeMinutes": 60,
+      "cmd": "ss -tulpn",
+      "commands": [
+        {
+          "cmd": "ss -tulpn",
+          "desc": "Audit all current listening sockets"
+        },
+        {
+          "cmd": "ip addr show",
+          "desc": "Verify network configuration"
+        }
+      ],
+      "checklist": [
+        "Scan and list every open port on your machine",
+        "Configure firewall to allow only required ports and drop everything else",
+        "Simulate an unauthorized remote connection attempt"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_61",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 61,
+      "title": "The Security Mindset & Threat Modeling",
+      "desc": "Understand the CIA Triad, Attack Surface, and Defense-in-Depth on Linux systems.",
+      "timeMinutes": 45,
+      "cmd": "who && w",
+      "commands": [
+        {
+          "cmd": "who && w",
+          "desc": "Check who is logged into the system"
+        },
+        {
+          "cmd": "last -n 10",
+          "desc": "Review recent login sessions"
+        }
+      ],
+      "checklist": [
+        "Identify your system attack surface (open ports, SUID binaries, cron jobs)",
+        "Understand Confidentiality, Integrity, and Availability trade-offs",
+        "Define a Threat Model for a Linux workstation vs a public server"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_62",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 62,
+      "title": "Security Auditing with Lynis",
+      "desc": "Perform automated security and compliance scans on a Linux system.",
+      "timeMinutes": 55,
+      "cmd": "sudo lynis audit system --quick 2>/dev/null || echo 'Install lynis to run scan'",
+      "commands": [
+        {
+          "cmd": "sudo lynis audit system --quick 2>/dev/null || echo 'Install lynis to run scan'",
+          "desc": "Run automated security audit"
+        }
+      ],
+      "checklist": [
+        "Run a system audit and review the Lynis Hardening Index",
+        "Inspect /var/log/lynis.log for warnings and suggestions",
+        "Identify top 3 actionable hardening recommendations"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_63",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 63,
+      "title": "SUID, SGID & Capabilities Audit",
+      "desc": "Hunt for dangerous SUID binaries and Linux Capabilities (getcap/setcap).",
+      "timeMinutes": 50,
+      "cmd": "find / -perm -4000 -type f 2>/dev/null",
+      "commands": [
+        {
+          "cmd": "find / -perm -4000 -type f 2>/dev/null",
+          "desc": "Find all SUID binaries"
+        },
+        {
+          "cmd": "getcap -r / 2>/dev/null",
+          "desc": "Audit binaries granted elevated capabilities"
+        }
+      ],
+      "checklist": [
+        "Check found SUID binaries against GTFOBins (gtfobins.github.io)",
+        "Understand how Linux Capabilities divide root privileges (cap_net_bind_service)",
+        "Remove unnecessary SUID bits with chmod u-s <file>"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_64",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 64,
+      "title": "Privilege Escalation: Sudo Misconfigurations",
+      "desc": "Understand how misconfigured sudo permissions lead to instant root takeover.",
+      "timeMinutes": 55,
+      "cmd": "sudo -l",
+      "commands": [
+        {
+          "cmd": "sudo -l",
+          "desc": "List allowed commands for current user"
+        }
+      ],
+      "checklist": [
+        "Analyze sudo -l output for dangerous binaries (vim, find, bash, python)",
+        "Understand how wildcards in sudoers create bypass vectors",
+        "Verify secure_path and env_reset are enabled in sudoers"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_65",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 65,
+      "title": "Authentication & Pluggable Authentication Modules (PAM)",
+      "desc": "Understand how Linux handles logins, passwords, fingerprint, and MFA in /etc/pam.d/.",
+      "timeMinutes": 55,
+      "cmd": "cat /etc/pam.d/system-auth",
+      "commands": [
+        {
+          "cmd": "cat /etc/pam.d/system-auth",
+          "desc": "Inspect core system authentication stack"
+        }
+      ],
+      "checklist": [
+        "Understand PAM module types: auth, account, password, session",
+        "Understand control flags: required, requisite, sufficient, optional",
+        "Explore how fingerprint and YubiKey MFA integrate into PAM"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_66",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 66,
+      "title": "Password Hashing & /etc/shadow Security",
+      "desc": "Understand modern password hashing algorithms (SHA-512, yescrypt, bcrypt) and salt.",
+      "timeMinutes": 50,
+      "cmd": "sudo grep '$y$' /etc/shadow 2>/dev/null || sudo head -n 3 /etc/shadow",
+      "commands": [
+        {
+          "cmd": "sudo grep '$y$' /etc/shadow 2>/dev/null || sudo head -n 3 /etc/shadow",
+          "desc": "Inspect modern yescrypt/SHA512 hashes"
+        }
+      ],
+      "checklist": [
+        "Decode /etc/shadow fields: user, hash, last changed, min/max age, warning",
+        "Understand cryptographic salt preventing rainbow table precomputation",
+        "Enforce strong password policy requirements"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_67",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 67,
+      "title": "Brute-Force Protection with Fail2ban",
+      "desc": "Automatically detect and ban abusive IP addresses attacking SSH and services.",
+      "timeMinutes": 50,
+      "cmd": "sudo fail2ban-client status 2>/dev/null || true",
+      "commands": [
+        {
+          "cmd": "sudo fail2ban-client status 2>/dev/null || true",
+          "desc": "Check fail2ban jail status"
+        }
+      ],
+      "checklist": [
+        "Understand how fail2ban parses log files for failed attempts with regex",
+        "Configure maxretry, findtime, and bantime in jail.local",
+        "Inspect dynamic firewall DROP rules created by fail2ban"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_68",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 68,
+      "title": "File Integrity Monitoring (AIDE / Tripwire)",
+      "desc": "Detect unauthorized changes to system binaries and configuration files.",
+      "timeMinutes": 50,
+      "cmd": "sha256sum /usr/bin/sudo /etc/passwd",
+      "commands": [
+        {
+          "cmd": "sha256sum /usr/bin/sudo /etc/passwd",
+          "desc": "Calculate cryptographic checksums of critical files"
+        }
+      ],
+      "checklist": [
+        "Understand how file integrity databases detect rootkit modifications",
+        "Generate and verify cryptographic hash manifests",
+        "Distinguish legitimate package upgrades from malicious file tampering"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_69",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 69,
+      "title": "Linux Auditing Framework (auditd)",
+      "desc": "Monitor system calls, file access events, and execution of sensitive binaries.",
+      "timeMinutes": 55,
+      "cmd": "sudo auditctl -s 2>/dev/null || true",
+      "commands": [
+        {
+          "cmd": "sudo auditctl -s 2>/dev/null || true",
+          "desc": "Check audit daemon status"
+        },
+        {
+          "cmd": "sudo aureport -au 2>/dev/null || true",
+          "desc": "View authentication attempt summary"
+        }
+      ],
+      "checklist": [
+        "Write an audit rule to monitor changes to /etc/passwd and /etc/shadow",
+        "Inspect audit logs using ausearch and aureport",
+        "Understand syscall tracing for incident investigations"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_70",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 70,
+      "title": "Network Scanning & Discovery with Nmap",
+      "desc": "Perform host discovery, port scanning, service version detection, and OS fingerprinting.",
+      "timeMinutes": 55,
+      "cmd": "nmap -sT 127.0.0.1",
+      "commands": [
+        {
+          "cmd": "nmap -sT 127.0.0.1",
+          "desc": "Scan local open TCP ports"
+        },
+        {
+          "cmd": "nmap -sV -p 22 127.0.0.1",
+          "desc": "Detect service version running on port 22"
+        }
+      ],
+      "checklist": [
+        "Differentiate between SYN stealth scan (-sS) and TCP connect scan (-sT)",
+        "Run banner grabbing and service detection (-sV)",
+        "Use Nmap Scripting Engine (NSE) for vulnerability checks (--script vuln)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_71",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 71,
+      "title": "Network Packet Capture with tcpdump",
+      "desc": "Capture, filter, and inspect raw network packets live on network interfaces.",
+      "timeMinutes": 55,
+      "cmd": "sudo tcpdump -i any -n -c 10 'tcp port 80 or tcp port 443'",
+      "commands": [
+        {
+          "cmd": "sudo tcpdump -i any -n -c 10 'tcp port 80 or tcp port 443'",
+          "desc": "Capture 10 HTTP/HTTPS packets"
+        },
+        {
+          "cmd": "sudo tcpdump -i any -w /tmp/traffic.pcap -c 50",
+          "desc": "Write raw pcap file for Wireshark"
+        }
+      ],
+      "checklist": [
+        "Construct Berkeley Packet Filters (BPF): 'host X and port Y'",
+        "Analyze DNS query packets and HTTP plaintext traffic",
+        "Save and load packet traces with -w and -r"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_72",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 72,
+      "title": "TLS/SSL Certificates & OpenSSL",
+      "desc": "Inspect certificates, verify expiry, and test remote cipher suites.",
+      "timeMinutes": 50,
+      "cmd": "openssl s_client -connect archlinux.org:443 -servername archlinux.org </dev/null",
+      "commands": [
+        {
+          "cmd": "openssl s_client -connect archlinux.org:443 -servername archlinux.org </dev/null",
+          "desc": "Verify remote TLS certificate chain"
+        },
+        {
+          "cmd": "openssl x509 -in cert.pem -text -noout 2>/dev/null || true",
+          "desc": "Inspect certificate details and expiry"
+        }
+      ],
+      "checklist": [
+        "Understand Certificate Authorities (CAs), chains of trust, and public keys",
+        "Verify TLS certificate expiration and Subject Alternative Names (SAN)",
+        "Generate a self-signed certificate for internal testing"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_73",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 73,
+      "title": "AppArmor & Mandatory Access Control (MAC)",
+      "desc": "Confine applications with security profiles to restrict file and network access.",
+      "timeMinutes": 50,
+      "cmd": "sudo aa-status 2>/dev/null || echo 'Check MAC status'",
+      "commands": [
+        {
+          "cmd": "sudo aa-status 2>/dev/null || echo 'Check MAC status'",
+          "desc": "Check AppArmor profile status"
+        }
+      ],
+      "checklist": [
+        "Understand difference between Discretionary (DAC) and Mandatory (MAC) access control",
+        "Understand AppArmor enforcement modes: enforce vs complain",
+        "Review an example AppArmor profile restricting a browser or daemon"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_74",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 74,
+      "title": "Rootkits & Malware Detection: rkhunter & chkrootkit",
+      "desc": "Scan for signs of userland and kernel rootkits, backdoors, and trojaned binaries.",
+      "timeMinutes": 50,
+      "cmd": "sudo rkhunter --check --skip-keypress 2>/dev/null || echo 'Install rkhunter'",
+      "commands": [
+        {
+          "cmd": "sudo rkhunter --check --skip-keypress 2>/dev/null || echo 'Install rkhunter'",
+          "desc": "Execute rootkit scan"
+        }
+      ],
+      "checklist": [
+        "Understand how rootkits hook system calls or replace system binaries",
+        "Run a known rootkit signature check",
+        "Distinguish false positives from actual security anomalies"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_75",
+      "track": "security",
+      "trackName": "CyberSec",
+      "phase": 5,
+      "phaseName": "Cybersecurity Fundamentals & Host Hardening",
+      "day": 75,
+      "title": "Phase 5 Lab: Complete Host Hardening",
+      "desc": "Apply a comprehensive security baseline: audit SUID, verify SSH, and enforce firewall.",
+      "timeMinutes": 60,
+      "cmd": "sudo ufw status verbose",
+      "commands": [
+        {
+          "cmd": "sudo ufw status verbose",
+          "desc": "Verify firewall rules"
+        },
+        {
+          "cmd": "sudo sshd -T",
+          "desc": "Verify SSH parameters"
+        }
+      ],
+      "checklist": [
+        "Audit and remove any unnecessary SUID permissions on your test filesystem",
+        "Ensure root login and password authentication are disabled in SSH",
+        "Verify the host rejects unsolicited incoming connections"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_76",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 76,
+      "title": "Log Forensics: Analyzing Auth & System Logs",
+      "desc": "Hunt for brute-force attacks, unauthorized sudo use, and lateral movement in logs.",
+      "timeMinutes": 55,
+      "cmd": "journalctl _COMM=sudo --since '7 days ago'",
+      "commands": [
+        {
+          "cmd": "journalctl _COMM=sudo --since '7 days ago'",
+          "desc": "Review all sudo command executions"
+        },
+        {
+          "cmd": "journalctl -u sshd | grep -i 'Failed password' | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr",
+          "desc": "Extract attacking IP frequency"
+        }
+      ],
+      "checklist": [
+        "Detect brute-force patterns by aggregating IP occurrences",
+        "Audit privileged sudo commands run by various users",
+        "Recognize log tampering indicators (cleared logs, missing timestamps)"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_77",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 77,
+      "title": "Investigating Rogue & Hidden Processes",
+      "desc": "Find malicious processes hiding behind deleted binaries or misleading names.",
+      "timeMinutes": 50,
+      "cmd": "ls -l /proc/*/exe 2>/dev/null | grep '(deleted)'",
+      "commands": [
+        {
+          "cmd": "ls -l /proc/*/exe 2>/dev/null | grep '(deleted)'",
+          "desc": "Find processes executing from unlinked binaries"
+        },
+        {
+          "cmd": "find /proc -maxdepth 2 -name cwd -ls 2>/dev/null",
+          "desc": "Inspect working directories of running processes"
+        }
+      ],
+      "checklist": [
+        "Detect memory-only processes running from deleted executables",
+        "Inspect /proc/<PID>/environ and /proc/<PID>/cmdline",
+        "Investigate processes consuming abnormal CPU/RAM in btop"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_78",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 78,
+      "title": "Persistence Mechanisms: How Malware Stays Alive",
+      "desc": "Audit common persistence hooks: cron, systemd units, shell rc files, and SSH keys.",
+      "timeMinutes": 55,
+      "cmd": "ls -la /etc/cron* /var/spool/cron/",
+      "commands": [
+        {
+          "cmd": "ls -la /etc/cron* /var/spool/cron/",
+          "desc": "Audit all scheduled cron directories"
+        },
+        {
+          "cmd": "find /etc/systemd/system/ ~/.config/systemd/user/ -name '*.service'",
+          "desc": "Audit custom systemd units"
+        },
+        {
+          "cmd": "cat ~/.bashrc ~/.bash_profile ~/.zshrc 2>/dev/null | grep -E 'curl|wget|bash|eval'",
+          "desc": "Inspect suspicious shell hooks"
+        }
+      ],
+      "checklist": [
+        "Audit cron jobs and systemd user services for hidden persistence",
+        "Check ~/.ssh/authorized_keys for unauthorized keys",
+        "Inspect shell profile scripts (~/.bashrc, /etc/profile) for hidden aliases or malicious exports"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_79",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 79,
+      "title": "Hands-on Wargame: OverTheWire Bandit (Levels 1\u201310)",
+      "desc": "Practice real Linux command-line skills on the classic Bandit security wargame.",
+      "timeMinutes": 60,
+      "cmd": "ssh bandit0@bandit.labs.overthewire.org -p 2220",
+      "commands": [
+        {
+          "cmd": "ssh bandit0@bandit.labs.overthewire.org -p 2220",
+          "desc": "Connect to Bandit challenge server (password: bandit0)"
+        }
+      ],
+      "checklist": [
+        "Complete Levels 1\u20135: file reading, spaces in filenames, hidden files",
+        "Complete Levels 6\u201310: file properties, search by size, base64 decoding",
+        "Document solutions in your personal study notebook"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_80",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 80,
+      "title": "Hands-on Wargame: OverTheWire Bandit (Levels 11\u201320)",
+      "desc": "Advance to rot13, tar/bzip compression loops, SSH keys, and localhost socket netcat.",
+      "timeMinutes": 60,
+      "cmd": "nc -zv localhost 30000-30005 2>/dev/null",
+      "commands": [
+        {
+          "cmd": "nc -zv localhost 30000-30005 2>/dev/null",
+          "desc": "Scan port range with netcat"
+        }
+      ],
+      "checklist": [
+        "Complete Levels 11\u201315: rot13 decoding, recurring archives, SSL client connections",
+        "Complete Levels 16\u201320: port scanning, RSA key exchange, SUID escalation",
+        "Practice piping tools into netcat and openssl s_client"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_81",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 81,
+      "title": "Container Security: Docker & Podman Basics",
+      "desc": "Understand Linux namespaces, cgroups, rootless containers, and container breakout vectors.",
+      "timeMinutes": 55,
+      "cmd": "docker ps 2>/dev/null || podman ps 2>/dev/null || true",
+      "commands": [
+        {
+          "cmd": "docker ps 2>/dev/null || podman ps 2>/dev/null || true",
+          "desc": "Check running container instances"
+        }
+      ],
+      "checklist": [
+        "Understand how containers use Linux namespaces (PID, NET, MNT, UTS, IPC)",
+        "Differentiate rootless containers from privileged root Docker containers",
+        "Understand security risks of mounting /var/run/docker.sock into a container"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_82",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 82,
+      "title": "Introduction to Penetration Testing & Metasploit",
+      "desc": "Understand ethical hacking phases: Recon, Scanning, Exploitation, Post-Exploitation.",
+      "timeMinutes": 55,
+      "cmd": "which msfconsole 2>/dev/null || echo 'Metasploit framework tool'",
+      "commands": [
+        {
+          "cmd": "which msfconsole 2>/dev/null || echo 'Metasploit framework tool'",
+          "desc": "Locate penetration testing suite"
+        }
+      ],
+      "checklist": [
+        "Understand the legal and ethical boundaries of penetration testing",
+        "Understand common exploit terminology: payload, exploit, meterpreter, shellcode",
+        "Explore TryHackMe or HackTheBox free starter tracks"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_83",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 83,
+      "title": "Web Application Security: OWASP Top 10",
+      "desc": "Understand core web vulnerabilities: SQL Injection, XSS, CSRF, SSRF, Broken Access Control.",
+      "timeMinutes": 50,
+      "cmd": "curl -s https://owasp.org/www-project-top-ten/ | grep -i 'A0' || true",
+      "commands": [
+        {
+          "cmd": "curl -s https://owasp.org/www-project-top-ten/ | grep -i 'A0' || true",
+          "desc": "Review OWASP Top 10 categories"
+        }
+      ],
+      "checklist": [
+        "Understand SQL Injection (SQLi) and how prepared statements prevent it",
+        "Understand Cross-Site Scripting (XSS) and Content Security Policy (CSP)",
+        "Understand Server-Side Request Forgery (SSRF) in cloud environments"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_84",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 84,
+      "title": "Backup & Disaster Recovery Strategy",
+      "desc": "Implement the 3-2-1 backup rule, encrypted offsite backups, and recovery testing.",
+      "timeMinutes": 50,
+      "cmd": "cat << 'EOF'\n3 Copies of data\n2 Different media types\n1 Offsite backup\nEOF",
+      "commands": [
+        {
+          "cmd": "cat << 'EOF'\n3 Copies of data\n2 Different media types\n1 Offsite backup\nEOF",
+          "desc": "The 3-2-1 Rule"
+        }
+      ],
+      "checklist": [
+        "Design a resilient backup strategy following the 3-2-1 rule",
+        "Encrypt backup archives with GPG or Age before cloud storage",
+        "Perform a test restore drills to verify backup archive integrity"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_85",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 85,
+      "title": "Security Incident Response Playbook",
+      "desc": "Walk through incident handling phases: Preparation, Detection, Containment, Eradication, Recovery.",
+      "timeMinutes": 55,
+      "cmd": "ip route | grep default",
+      "commands": [
+        {
+          "cmd": "ip route | grep default",
+          "desc": "Check network isolation readiness"
+        }
+      ],
+      "checklist": [
+        "Step 1: Isolate compromised host from network (ip link set dev down)",
+        "Step 2: Collect volatile forensic memory and state before reboot",
+        "Step 3: Identify entry vector and patch root cause before restoring"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_86",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 86,
+      "title": "SELinux & Advanced Mandatory Access Control",
+      "desc": "Understand Security-Enhanced Linux (SELinux) contexts, policies, and booleans.",
+      "timeMinutes": 50,
+      "cmd": "ls -Z /etc/passwd 2>/dev/null || echo 'SELinux context display'",
+      "commands": [
+        {
+          "cmd": "ls -Z /etc/passwd 2>/dev/null || echo 'SELinux context display'",
+          "desc": "Inspect security contexts"
+        }
+      ],
+      "checklist": [
+        "Understand SELinux components: User, Role, Type, Level",
+        "Understand enforcing vs permissive modes",
+        "Troubleshoot access denial using audit logs and setroubleshoot"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_87",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 87,
+      "title": "Automated Vulnerability Scanning (OpenVAS / Nuclei)",
+      "desc": "Use vulnerability scanners to identify CVEs, outdated packages, and misconfigurations.",
+      "timeMinutes": 50,
+      "cmd": "which nuclei 2>/dev/null || echo 'Nuclei vulnerability scanner'",
+      "commands": [
+        {
+          "cmd": "which nuclei 2>/dev/null || echo 'Nuclei vulnerability scanner'",
+          "desc": "Check for automated vulnerability tooling"
+        }
+      ],
+      "checklist": [
+        "Understand Common Vulnerabilities and Exposures (CVE) and CVSS scores",
+        "Review vulnerability report outputs and prioritize critical/high risks",
+        "Distinguish automated scanner false positives from real exploits"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_88",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 88,
+      "title": "Career Paths & Certifications in SysAdmin & CyberSec",
+      "desc": "Plan certification roadmaps (CompTIA Security+, RHCSA, CEH, OSCP, eJPT).",
+      "timeMinutes": 45,
+      "cmd": "echo 'Certifications: RHCSA -> Security+ -> BTL1 / OSCP'",
+      "commands": [
+        {
+          "cmd": "echo 'Certifications: RHCSA -> Security+ -> BTL1 / OSCP'",
+          "desc": "Industry roadmap"
+        }
+      ],
+      "checklist": [
+        "Explore SysAdmin paths: Red Hat Certified System Administrator (RHCSA), Linux Foundation (LFCS)",
+        "Explore Defensive (Blue Team) paths: Security+, CySA+, BTL1",
+        "Explore Offensive (Red Team) paths: eJPT, PNPT, OSCP"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_89",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 89,
+      "title": "Capstone Project: End-to-End System Hardening & Audit",
+      "desc": "Audit, harden, firewall, and document your personal Linux workstation.",
+      "timeMinutes": 60,
+      "cmd": "uptime && sudo ss -tulpn",
+      "commands": [
+        {
+          "cmd": "uptime && sudo ss -tulpn",
+          "desc": "System baseline verification"
+        }
+      ],
+      "checklist": [
+        "Audit running services and disable unused network ports",
+        "Verify SSH hardening and firewall drop rules",
+        "Run a Lynis or rkhunter scan and achieve a hardened baseline"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    },
+    {
+      "id": "day_90",
+      "track": "threat_hunting",
+      "trackName": "Forensics",
+      "phase": 6,
+      "phaseName": "Incident Response, Threat Hunting & Hands-on Labs",
+      "day": 90,
+      "title": "Final Review & Continuous Learning Routine",
+      "desc": "Establish daily habits: security news (The Hacker News, BleepingComputer), daily terminal practice.",
+      "timeMinutes": 45,
+      "cmd": "echo 'Congratulations on completing the 90-Day Linux, SysAdmin & CyberSec Roadmap!'",
+      "commands": [
+        {
+          "cmd": "echo 'Congratulations on completing the 90-Day Linux, SysAdmin & CyberSec Roadmap!'",
+          "desc": "Roadmap completion"
+        }
+      ],
+      "checklist": [
+        "Review your progress and checklist across all 6 phases",
+        "Bookmark ongoing practice resources: OverTheWire, TryHackMe, LinuxJourney",
+        "Set your next 90-day learning objective"
+      ],
+      "verifyCmd": "",
+      "explainer": "",
+      "wikiUrl": "https://wiki.archlinux.org/"
+    }
+  ]
+}

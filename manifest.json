@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "learn.linux",
   "name": "Omarchy Linux Learning Hub",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "omara",
   "license": "MIT",
-  "description": "Interactive daily task checklist and curriculum for Linux, System Administration, and Cyber Security.",
+  "description": "Interactive daily task checklist, terminal practice labs, automated verification, and CLI companion for Linux, DevOps, and Cyber Security.",
   "kinds": [
     "bar-widget"
   ],
@@ -14,7 +14,7 @@
   },
   "barWidget": {
     "displayName": "Linux Learning",
-    "description": "Track daily Linux, System Administration, and Cyber Security learning progress.",
+    "description": "Track daily Linux, System Administration, and Cyber Security learning progress with terminal lab runner and CLI companion.",
     "category": "Education",
     "allowMultiple": false,
     "defaultSection": "center"

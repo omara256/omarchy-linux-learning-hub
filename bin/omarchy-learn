@@ -1,0 +1,477 @@
+#!/usr/bin/env python3
+"""
+Omarchy Linux Learning Hub - CLI Companion
+Interact with your daily Linux, SysAdmin, and Cyber Security learning hub directly from the terminal.
+"""
+
+import sys
+import os
+import json
+import subprocess
+import datetime
+from pathlib import Path
+
+# Paths
+HOME = os.environ.get("HOME", str(Path.home()))
+REAL_FILE = os.path.realpath(__file__)
+PLUGIN_DIR = os.path.dirname(os.path.dirname(REAL_FILE))
+DATA_DIR = os.path.join(PLUGIN_DIR, "data")
+
+if not os.path.exists(DATA_DIR):
+    alt_dirs = [
+        os.path.join(HOME, ".config", "omarchy", "plugins", "learn.linux", "data"),
+        os.path.join(HOME, "Work", "omarchy-linux-learning-hub", "data")
+    ]
+    for alt in alt_dirs:
+        if os.path.exists(alt):
+            DATA_DIR = alt
+            PLUGIN_DIR = os.path.dirname(alt)
+            break
+
+STORAGE_DIR = os.path.join(HOME, ".config", "omarchy", "linux-learning")
+PROGRESS_FILE = os.path.join(STORAGE_DIR, "progress.json")
+
+# Colors
+C_RESET = "\033[0m"
+C_BOLD = "\033[1m"
+C_DIM = "\033[2m"
+C_CYAN = "\033[1;36m"
+C_BLUE = "\033[1;34m"
+C_GREEN = "\033[1;32m"
+C_YELLOW = "\033[1;33m"
+C_RED = "\033[1;31m"
+C_MAGENTA = "\033[1;35m"
+
+def load_progress():
+    if not os.path.exists(PROGRESS_FILE):
+        return {
+            "version": 2,
+            "curriculumMode": "48",
+            "barStyle": "percent",
+            "streak": 1,
+            "lastActiveDate": "",
+            "completed": {}
+        }
+    try:
+        with open(PROGRESS_FILE, "r") as f:
+            data = json.load(f)
+            if not isinstance(data, dict):
+                data = {}
+            data.setdefault("version", 2)
+            data.setdefault("curriculumMode", "48")
+            data.setdefault("streak", 1)
+            data.setdefault("lastActiveDate", "")
+            data.setdefault("completed", {})
+            return data
+    except Exception:
+        return {
+            "version": 2,
+            "curriculumMode": "48",
+            "streak": 1,
+            "lastActiveDate": "",
+            "completed": {}
+        }
+
+def save_progress(data):
+    os.makedirs(STORAGE_DIR, exist_ok=True)
+    with open(PROGRESS_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+        f.write("\n")
+
+def get_today_string():
+    return datetime.date.today().isoformat()
+
+def update_streak(data):
+    today = get_today_string()
+    last = data.get("lastActiveDate", "")
+    if last == today:
+        return
+    if last:
+        try:
+            d_last = datetime.date.fromisoformat(last)
+            d_now = datetime.date.today()
+            diff = (d_now - d_last).days
+            if diff == 1:
+                data["streak"] = data.get("streak", 1) + 1
+            elif diff > 1:
+                data["streak"] = 1
+        except Exception:
+            data["streak"] = 1
+    else:
+        data["streak"] = 1
+    data["lastActiveDate"] = today
+
+def load_topics(mode="48"):
+    filename = "roadmap90.json" if mode == "90" else "roadmap48.json"
+    filepath = os.path.join(DATA_DIR, filename)
+    if not os.path.exists(filepath):
+        # Fallback to 48
+        filepath = os.path.join(DATA_DIR, "roadmap48.json")
+    with open(filepath, "r") as f:
+        data = json.load(f)
+        return data.get("days", [])
+
+def find_topic(query, topics):
+    query_str = str(query).strip().lower()
+    # Check by exact id
+    for t in topics:
+        if t["id"].lower() == query_str:
+            return t
+    # Check by day number
+    try:
+        day_num = int(query_str)
+        for t in topics:
+            if t["day"] == day_num:
+                return t
+    except ValueError:
+        pass
+    # Check partial title
+    for t in topics:
+        if query_str in t["title"].lower():
+            return t
+    return None
+
+def make_bar(percent, width=24):
+    filled = int(round((percent / 100.0) * width))
+    bar = "█" * filled + "░" * (width - filled)
+    return f"[{bar}]"
+
+# --- COMMANDS ---
+
+def cmd_status(data):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    completed_map = data.get("completed", {})
+    streak = data.get("streak", 1)
+
+    total = len(topics)
+    completed = sum(1 for t in topics if completed_map.get(t["id"]))
+    percent = int(round((completed / total) * 100)) if total > 0 else 0
+
+    mode_name = "90-Day Full DevOps & Cyber Security Roadmap" if mode == "90" else "48-Day Fast Track: Core • SysAdmin • CyberSec"
+
+    print(f"\n{C_CYAN}=================================================================={C_RESET}")
+    print(f"  {C_YELLOW}🐧 Omarchy Linux Learning Hub{C_RESET}")
+    print(f"{C_CYAN}=================================================================={C_RESET}")
+    print(f"  {C_BOLD}Curriculum:{C_RESET} {mode_name}")
+    print(f"  {C_BOLD}Streak:{C_RESET}     🔥 {C_YELLOW}{streak}{C_RESET} day(s) active streak")
+    print(f"  {C_BOLD}Progress:{C_RESET}   {C_GREEN}{make_bar(percent)}{C_RESET} {completed}/{total} ({percent}% completed)")
+    print(f"{C_CYAN}------------------------------------------------------------------{C_RESET}")
+
+    # Track breakdown
+    tracks = {}
+    for t in topics:
+        trk = t.get("track", "other")
+        tname = t.get("trackName", trk)
+        if trk not in tracks:
+            tracks[trk] = {"name": tname, "total": 0, "completed": 0}
+        tracks[trk]["total"] += 1
+        if completed_map.get(t["id"]):
+            tracks[trk]["completed"] += 1
+
+    print(f"  {C_BOLD}Track Breakdown:{C_RESET}")
+    for trk, s in tracks.items():
+        t_pct = int(round((s["completed"] / s["total"]) * 100)) if s["total"] > 0 else 0
+        bar = make_bar(t_pct, width=12)
+        print(f"    • {s['name']:<18} {C_CYAN}{bar}{C_RESET} {s['completed']:>2}/{s['total']:<2} ({t_pct:>3}%)")
+
+    print(f"{C_CYAN}=================================================================={C_RESET}\n")
+
+def cmd_today(data):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    completed_map = data.get("completed", {})
+
+    track_order = ["foundations", "scripting", "sysadmin", "networking", "security", "threat_hunting"] if mode == "90" else ["linux", "sysadmin", "security"]
+
+    picked = []
+    for trk in track_order:
+        for t in topics:
+            if t.get("track") == trk and not completed_map.get(t["id"]):
+                picked.append(t)
+                break
+        if len(picked) >= 4:
+            break
+
+    if len(picked) < 4:
+        for t in topics:
+            if not completed_map.get(t["id"]) and t not in picked:
+                picked.append(t)
+                if len(picked) >= 4:
+                    break
+
+    if not picked:
+        picked = topics[:4]
+
+    print(f"\n{C_CYAN}🌟 Today's Daily Focus Tasks:{C_RESET}\n")
+    for t in picked:
+        done = completed_map.get(t["id"], False)
+        check = f"{C_GREEN}[✔]{C_RESET}" if done else f"{C_DIM}[ ]{C_RESET}"
+        print(f"  {check} {C_BOLD}Day {t['day']}:{C_RESET} {t['title']} {C_DIM}({t.get('trackName', t.get('track'))}){C_RESET}")
+        print(f"      {C_CYAN}${C_RESET} {t['cmd']}")
+        if t.get("explainer"):
+            print(f"      {C_DIM}💡 {t['explainer']}{C_RESET}")
+        print()
+
+def cmd_list(data, track_filter=None, status_filter="all"):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    completed_map = data.get("completed", {})
+
+    print(f"\n{C_CYAN}📋 Curriculum Topics ({mode}-Day Mode):{C_RESET}\n")
+    for t in topics:
+        if track_filter and track_filter.lower() not in [t.get("track", "").lower(), t.get("trackName", "").lower()]:
+            continue
+
+        done = completed_map.get(t["id"], False)
+        if status_filter == "incomplete" and done:
+            continue
+        if status_filter == "completed" and not done:
+            continue
+
+        check = f"{C_GREEN}[✔]{C_RESET}" if done else f"{C_DIM}[ ]{C_RESET}"
+        print(f"  {check} {C_BOLD}Day {t['day']:>2}:{C_RESET} {t['title']:<40} {C_DIM}[{t.get('trackName', '')}]{C_RESET}")
+
+    print()
+
+def cmd_show(data, query):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    topic = find_topic(query, topics)
+    if not topic:
+        print(f"{C_RED}Error:{C_RESET} Topic '{query}' not found.")
+        sys.exit(1)
+
+    completed_map = data.get("completed", {})
+    done = completed_map.get(topic["id"], False)
+
+    print(f"\n{C_CYAN}=================================================================={C_RESET}")
+    status_str = f"{C_GREEN}COMPLETED ✔{C_RESET}" if done else f"{C_YELLOW}PENDING{C_RESET}"
+    print(f"  {C_BOLD}Day {topic['day']}: {topic['title']}{C_RESET}  [{status_str}]")
+    print(f"  {C_DIM}Track: {topic.get('trackName')} | ID: {topic['id']}{C_RESET}")
+    print(f"{C_CYAN}=================================================================={C_RESET}")
+    print(f"\n  {C_BOLD}Description:{C_RESET}\n    {topic.get('desc', '')}\n")
+
+    if topic.get("checklist"):
+        print(f"  {C_BOLD}Checklist Goals:{C_RESET}")
+        for item in topic["checklist"]:
+            print(f"    • {item}")
+        print()
+
+    print(f"  {C_BOLD}Primary Practice Command:{C_RESET}")
+    print(f"    {C_CYAN}${C_RESET} {topic['cmd']}\n")
+
+    if topic.get("explainer"):
+        print(f"  {C_BOLD}💡 Syntax Breakdown & Flags:{C_RESET}")
+        print(f"    {topic['explainer']}\n")
+
+    if topic.get("commands") and len(topic["commands"]) > 1:
+        print(f"  {C_BOLD}Sub-steps & Commands:{C_RESET}")
+        for c in topic["commands"]:
+            print(f"    ➜ {c.get('desc', '')}")
+            print(f"      {C_CYAN}${C_RESET} {c['cmd']}")
+        print()
+
+    if topic.get("wikiUrl"):
+        print(f"  {C_BOLD}Documentation Link:{C_RESET}\n    {C_BLUE}{topic['wikiUrl']}{C_RESET}\n")
+
+def cmd_done(data, query, mark=True):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    topic = find_topic(query, topics)
+    if not topic:
+        print(f"{C_RED}Error:{C_RESET} Topic '{query}' not found.")
+        sys.exit(1)
+
+    tid = topic["id"]
+    completed_map = data.get("completed", {})
+
+    if mark:
+        completed_map[tid] = True
+        update_streak(data)
+        print(f"{C_GREEN}✔ Marked Day {topic['day']} ({topic['title']}) as COMPLETED!{C_RESET}")
+    else:
+        if tid in completed_map:
+            del completed_map[tid]
+        print(f"{C_YELLOW}↺ Marked Day {topic['day']} ({topic['title']}) as PENDING.{C_RESET}")
+
+    data["completed"] = completed_map
+    save_progress(data)
+
+def cmd_verify(data, query):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    topic = find_topic(query, topics)
+    if not topic:
+        print(f"{C_RED}Error:{C_RESET} Topic '{query}' not found.")
+        sys.exit(1)
+
+    tid = topic["id"]
+    print(f"🔍 Running verification check for {C_BOLD}Day {topic['day']}: {topic['title']}{C_RESET}...")
+
+    verify_script = os.path.join(PLUGIN_DIR, "bin", "verify-task.sh")
+    res = subprocess.run([verify_script, tid])
+
+    if res.returncode == 0:
+        print(f"\n{C_GREEN}✔ Verification check PASSED!{C_RESET}")
+        cmd_done(data, query, mark=True)
+    else:
+        print(f"\n{C_RED}✕ Verification check FAILED.{C_RESET} Verify configuration or prerequisites and try again.")
+        sys.exit(1)
+
+def cmd_run(data, query):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    topic = find_topic(query, topics)
+    if not topic:
+        print(f"{C_RED}Error:{C_RESET} Topic '{query}' not found.")
+        sys.exit(1)
+
+    runner_script = os.path.join(PLUGIN_DIR, "bin", "run-lab.sh")
+    print(f"🚀 Launching lab for {C_BOLD}Day {topic['day']}: {topic['title']}{C_RESET}...")
+    subprocess.Popen([runner_script, topic["title"], topic["cmd"]])
+
+def cmd_mode(data, new_mode=None):
+    current = data.get("curriculumMode", "48")
+    if not new_mode:
+        print(f"Current curriculum mode: {C_BOLD}{current}-Day{C_RESET}")
+        print("To change mode, run: omarchy-learn mode 48 OR omarchy-learn mode 90")
+        return
+
+    if new_mode not in ["48", "90"]:
+        print(f"{C_RED}Error:{C_RESET} Invalid mode '{new_mode}'. Choose '48' or '90'.")
+        sys.exit(1)
+
+    data["curriculumMode"] = new_mode
+    save_progress(data)
+    mode_desc = "90-Day Full Curriculum" if new_mode == "90" else "48-Day Intensive Track"
+    print(f"{C_GREEN}✔ Switched curriculum mode to {mode_desc}!{C_RESET}")
+
+def cmd_export(data, out_path=None):
+    mode = data.get("curriculumMode", "48")
+    topics = load_topics(mode)
+    completed_map = data.get("completed", {})
+    streak = data.get("streak", 1)
+
+    total = len(topics)
+    completed = sum(1 for t in topics if completed_map.get(t["id"]))
+    percent = int(round((completed / total) * 100)) if total > 0 else 0
+
+    lines = [
+        "# 🐧 My Linux Learning Journey",
+        "",
+        "> Tracked with **Omarchy Linux Learning Hub**",
+        "",
+        "## 📊 Progress Summary",
+        f"- **Curriculum**: {'90-Day Full Curriculum' if mode == '90' else '48-Day Intensive Track'}",
+        f"- **Completion**: {completed} / {total} ({percent}%)",
+        f"- **Current Streak**: 🔥 {streak} day(s)",
+        "",
+        "## 📋 Learning Checklist",
+        ""
+    ]
+
+    for t in topics:
+        done = completed_map.get(t["id"], False)
+        check = "[x]" if done else "[ ]"
+        lines.append(f"- {check} **Day {t['day']}**: {t['title']} *({t.get('trackName', '')})*")
+        lines.append(f"  - *Command*: `{t['cmd']}`")
+        if t.get("explainer"):
+            lines.append(f"  - *Syntax*: {t['explainer']}")
+
+    lines.append("\n---\n*Generated by Omarchy Linux Learning Hub*")
+
+    target = out_path or os.path.join(HOME, "Documents", "MY_LINUX_JOURNEY.md")
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    with open(target, "w") as f:
+        f.write("\n".join(lines) + "\n")
+
+    print(f"{C_GREEN}✔ Learning journey exported successfully to:{C_RESET} {target}")
+
+def cmd_notify():
+    notify_script = os.path.join(PLUGIN_DIR, "bin", "notify-daily.sh")
+    subprocess.run([notify_script])
+
+def print_help():
+    print(f"""
+{C_CYAN}Omarchy Linux Learning Hub - CLI Companion{C_RESET}
+
+{C_BOLD}USAGE:{C_RESET}
+    omarchy-learn <command> [arguments]
+
+{C_BOLD}COMMANDS:{C_RESET}
+    {C_GREEN}status{C_RESET}                Show overview, streaks, progress bars, and track status
+    {C_GREEN}today{C_RESET}                 Display today's 4 daily focus tasks
+    {C_GREEN}list{C_RESET} [track]          List all topics (optional filter: linux, sysadmin, security)
+    {C_GREEN}show{C_RESET} <day|id>         Show complete details, flags breakdown, and checklist
+    {C_GREEN}run{C_RESET} <day|id>          Launch terminal practice session for topic
+    {C_GREEN}verify{C_RESET} <day|id>       Run automated verification check and auto-complete if passed
+    {C_GREEN}done{C_RESET} <day|id>         Mark a task completed
+    {C_GREEN}undone{C_RESET} <day|id>       Mark a task uncompleted
+    {C_GREEN}mode{C_RESET} [48|90]          View or switch between 48-Day Intensive and 90-Day Full Curriculum
+    {C_GREEN}export{C_RESET} [path]         Export markdown journey report (default: ~/Documents/MY_LINUX_JOURNEY.md)
+    {C_GREEN}notify{C_RESET}                Send desktop reminder if today's study task is waiting
+    {C_GREEN}help{C_RESET}                  Show this help message
+""")
+
+def main():
+    data = load_progress()
+
+    if len(sys.argv) < 2:
+        cmd_status(data)
+        return
+
+    sub = sys.argv[1].lower()
+
+    if sub in ["status", "stat", "st"]:
+        cmd_status(data)
+    elif sub in ["today", "focus"]:
+        cmd_today(data)
+    elif sub in ["list", "ls"]:
+        track = sys.argv[2] if len(sys.argv) > 2 else None
+        cmd_list(data, track_filter=track)
+    elif sub in ["show", "info"]:
+        if len(sys.argv) < 3:
+            print(f"{C_RED}Error:{C_RESET} Provide a day number or topic ID (e.g. omarchy-learn show 1)")
+            sys.exit(1)
+        cmd_show(data, sys.argv[2])
+    elif sub in ["done", "complete", "check"]:
+        if len(sys.argv) < 3:
+            print(f"{C_RED}Error:{C_RESET} Provide a day number or topic ID (e.g. omarchy-learn done 1)")
+            sys.exit(1)
+        cmd_done(data, sys.argv[2], mark=True)
+    elif sub in ["undone", "uncheck"]:
+        if len(sys.argv) < 3:
+            print(f"{C_RED}Error:{C_RESET} Provide a day number or topic ID (e.g. omarchy-learn undone 1)")
+            sys.exit(1)
+        cmd_done(data, sys.argv[2], mark=False)
+    elif sub in ["verify", "test", "check-work"]:
+        if len(sys.argv) < 3:
+            print(f"{C_RED}Error:{C_RESET} Provide a day number or topic ID (e.g. omarchy-learn verify 1)")
+            sys.exit(1)
+        cmd_verify(data, sys.argv[2])
+    elif sub in ["run", "lab", "practice"]:
+        if len(sys.argv) < 3:
+            print(f"{C_RED}Error:{C_RESET} Provide a day number or topic ID (e.g. omarchy-learn run 1)")
+            sys.exit(1)
+        cmd_run(data, sys.argv[2])
+    elif sub in ["mode", "switch"]:
+        new_mode = sys.argv[2] if len(sys.argv) > 2 else None
+        cmd_mode(data, new_mode)
+    elif sub in ["export", "md"]:
+        out_path = sys.argv[2] if len(sys.argv) > 2 else None
+        cmd_export(data, out_path)
+    elif sub in ["notify", "remind"]:
+        cmd_notify()
+    elif sub in ["help", "-h", "--help"]:
+        print_help()
+    else:
+        # Try finding as day number or topic
+        topic = find_topic(sub, load_topics(data.get("curriculumMode", "48")))
+        if topic:
+            cmd_show(data, sub)
+        else:
+            print_help()
+
+if __name__ == "__main__":
+    main()
