@@ -424,8 +424,8 @@ var TOPICS = [
     trackName: "Cyber Security",
     day: 46,
     title: "Encrypted Tunnels & WireGuard VPN",
-    desc: "Set up encrypted VPN tunnels using WireGuard public/private key pairs, and secure traffic via SSH port forwarding.",
-    cmd: "wg genkey | tee privkey | wg pubkey > pubkey && ssh -L 8080:localhost:80 user@remote"
+    desc: "Set up encrypted VPN tunnels using WireGuard public/private key pairs (with restrictive umask 077 and chmod 600 for private key isolation), and secure traffic via SSH port forwarding.",
+    cmd: "(umask 077 && wg genkey | tee privkey | wg pubkey > pubkey) && chmod 600 privkey && ssh -L 8080:localhost:80 user@remote"
   },
   {
     id: "tls_crypto_openssl",
